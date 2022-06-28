@@ -6,30 +6,34 @@ import UserContext from "../context/UserContext";
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Login() {
+export default function Signup() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  async function Login(event) {
+  async function Signup(event) {
     event.preventDefault();
 
     const body = {
+      name,
       email,
       password,
+      confirmPassword,
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/login", body);
-      const { name, email, token } = response;
+      const response = await axios.post("http://localhost:5000/signup", body);
+      const { name, email, password } = response;
 
       setUser({
         name,
         email,
-        token,
+        password,
       });
 
       navigate("/transactions");
@@ -40,9 +44,16 @@ export default function Login() {
     }
   }
 
-  function LoginForm() {
+  function SignupForm() {
     return (
       <>
+        <input
+          type="name"
+          id="name"
+          value={name}
+          placeholder="Nome"
+          onChange={(e) => setName(e.target.value)}
+        />
         <input
           type="email"
           id="email"
@@ -57,7 +68,14 @@ export default function Login() {
           placeholder="Senha"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+        <input
+          type="password"
+          id="confirmPassword"
+          value={confirmPassword}
+          placeholder="Confirme a senha"
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <button type="submit">Cadastrar</button>
       </>
     );
   }
@@ -65,8 +83,8 @@ export default function Login() {
   return (
     <Container>
       <h1>My Wallet</h1>
-      <LoginForms onSubmit={Login}>{LoginForm()}</LoginForms>
-      <Link to="/signup">Primeira vez? Cadastre-se!</Link>
+      <SignupForms onSubmit={Signup}>{SignupForm()}</SignupForms>
+      <Link to="/">Já tem uma conta? Entre agora!</Link>
     </Container>
   );
 }
@@ -79,7 +97,7 @@ const Container = styled.div`
   font-family: "Lexend Deca", sans-serif;
   height: 100vh;
 `;
-const LoginForms = styled.form`
+const SignupForms = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

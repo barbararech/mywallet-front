@@ -5,8 +5,8 @@ import "../assets/styles/reset.css";
 import GlobalStyle from "../assets/styles/globalStyles";
 
 import Login from "./Login";
-// import SignUp from "./SignUp";
-// import Transactions from "./Transactions";
+import Signup from "./Signup";
+import Transactions from "./Transactions";
 // import Income from "./Income";
 // import Expense from "./Expense";
 
@@ -19,10 +19,10 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          {/* <Route path="/signup" element={<SignUp />} />
-                <Route path="/transactions" element={<Transactions />} />
-                <Route path="/income" element={<Income />} />  
-                <Route path="/expense" element={<Expense />} />   */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/transactions" element={<Transactions />} />
+          {/* <Route path="/income" element={<Income />} />  
+          <Route path="/expense" element={<Expense />} />   */}
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

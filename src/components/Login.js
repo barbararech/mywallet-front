@@ -10,7 +10,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -24,13 +24,12 @@ export default function Login() {
 
     try {
       const response = await axios.post("http://localhost:5000/login", body);
-      // const { name, email, token } = response.data;
-      const { name, email } = response.data;
-      console.log(response);
+      const { name, email, token } = response.data;
+
       setUser({
         name,
         email,
-        // token,
+        token,
       });
 
       navigate("/transactions");
@@ -61,7 +60,7 @@ export default function Login() {
       </>
     );
   }
-  console.log(user);
+
   return (
     <Container>
       <h1>My Wallet</h1>
@@ -76,7 +75,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   height: 100vh;
 `;
 const LoginForms = styled.form`

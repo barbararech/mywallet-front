@@ -14,7 +14,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  async function Login(event) {
+  async function AddLogin(event) {
     event.preventDefault();
 
     const body = {
@@ -64,7 +64,7 @@ export default function Login() {
   return (
     <Container>
       <h1>My Wallet</h1>
-      <LoginForms onSubmit={Login}>{LoginForm()}</LoginForms>
+      <LoginForms onSubmit={AddLogin}>{LoginForm()}</LoginForms>
       <Link to="/signup">Primeira vez? Cadastre-se!</Link>
     </Container>
   );

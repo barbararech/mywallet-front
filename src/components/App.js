@@ -7,8 +7,8 @@ import GlobalStyle from "../assets/styles/globalStyles";
 import Login from "./Login";
 import Signup from "./Signup";
 import Transactions from "./Transactions";
-// import Income from "./Income";
-// import Expense from "./Expense";
+import Income from "./Income";
+import Expense from "./Expense";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -21,8 +21,8 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/transactions" element={<Transactions />} />
-          {/* <Route path="/income" element={<Income />} />  
-          <Route path="/expense" element={<Expense />} />   */}
+          <Route path="/income" element={<Income />} />  
+          <Route path="/expense" element={<Expense />} />  
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

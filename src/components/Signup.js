@@ -1,8 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -11,8 +9,6 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -23,23 +19,18 @@ export default function Signup() {
       name,
       email,
       password,
-      confirmPassword,
     };
 
+    if (password !== confirmPassword) {
+      return alert("As senhas não são iguais. Tente novamente!");
+    }
+
     try {
-      const response = await axios.post("http://localhost:5000/signup", body);
-      const { name, email, password } = response;
-
-      setUser({
-        name,
-        email,
-        password,
-      });
-
-      navigate("/transactions");
+      await axios.post("http://localhost:5000/signup", body);
+      alert("Usuário criado com sucesso!");
+      navigate("/");
     } catch (error) {
       const message = error.response.statusText;
-
       alert(message);
     }
   }
@@ -72,6 +63,7 @@ export default function Signup() {
           type="password"
           id="confirmPassword"
           value={confirmPassword}
+          required
           placeholder="Confirme a senha"
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
@@ -94,7 +86,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "Lexend Deca", sans-serif;
+  font-family: "Raleway", sans-serif;
   height: 100vh;
 `;
 const SignupForms = styled.form`

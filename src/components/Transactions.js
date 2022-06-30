@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
@@ -11,6 +11,7 @@ import {
 } from "react-icons/io5";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const { name, token } = user;
   const [transactions, setTransactions] = useState([]);
@@ -81,13 +82,30 @@ export default function Signup() {
     }
   }
 
+  async function SignOut() {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      await axios.get("http://localhost:5000/signout", config);
+      alert("Usuário deslogado com sucesso!");
+      navigate("/");
+    } catch (error) {
+      const message = error.response.statusText;
+      alert(message);
+    }
+  }
+
   return (
     <Container>
       <TransactionsHeader>
         <h2>Olá, {name}</h2>
-        <icon>
+        <i onClick={() => SignOut()}>
           <IoExitOutline />
-        </icon>
+        </i>
       </TransactionsHeader>
       <TransactionsContainer transactions={transactions}>
         <Transactions>{RenderTransactions()}</Transactions>
@@ -95,15 +113,15 @@ export default function Signup() {
       </TransactionsContainer>
       <ContainerAddTransaction>
         <Link to="/income">
-          <icon>
+          <i>
             <IoAddCircleOutline />
-          </icon>
+          </i>
           <span>Nova Entrada</span>
         </Link>
         <Link to="/expense">
-          <icon>
+          <i>
             <IoRemoveCircleOutline />
-          </icon>
+          </i>
           <span>Nova Saída</span>
         </Link>
       </ContainerAddTransaction>
@@ -132,9 +150,10 @@ const TransactionsHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  icon {
+  i {
     font-size: 30px;
     color: #ffffff;
+    cursor: pointer;
   }
 `;
 
@@ -236,7 +255,7 @@ const ContainerAddTransaction = styled.div`
     margin-right: 8px;
   }
 
-  icon {
+  i {
     font-size: 25px;
     color: #ffffff;
   }

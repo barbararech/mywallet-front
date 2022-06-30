@@ -25,7 +25,7 @@ export default function Income() {
     event.preventDefault();
 
     const body = {
-      value,
+      value: parseFloat(value),
       description,
       type: "income",
     };

@@ -25,7 +25,7 @@ export default function Expense() {
     event.preventDefault();
 
     const body = {
-      value,
+      value: parseFloat(value),
       description,
       type: "expense",
     };

@@ -13,7 +13,6 @@ import {
 export default function Signup() {
   const { user } = useContext(UserContext);
   const { name, token } = user;
-  console.log(token);
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ export default function Signup() {
           "http://localhost:5000/transactions",
           config
         );
-        console.log(response);
 
         setTransactions(response.data);
       } catch (error) {
@@ -41,19 +39,19 @@ export default function Signup() {
   }, []);
 
   function renderTransactions() {
-    console.log(transactions);
     if (transactions.length === 0) {
       return <p>Não há registros de entrada ou saída</p>;
     }
 
-    transactions.map((transaction) => {
-      const { date, description, value } = transactions;
+    return transactions.map((transaction, index) => {
+      const { date, description, value, type } = transaction;
+      const valueFixed = value.toFixed(2);
       return (
-        <>
+        <Transaction type={type} index={index}>
           <span>{date}</span>
           <span>{description}</span>
-          <span>{value}</span>
-        </>
+          <span>{valueFixed}</span>
+        </Transaction>
       );
     });
   }
@@ -66,7 +64,9 @@ export default function Signup() {
           <IoExitOutline />
         </icon>
       </TransactionsHeader>
-      <TransactionsContainer>{renderTransactions()}</TransactionsContainer>
+      <TransactionsContainer transactions={transactions}>
+        {renderTransactions()}
+      </TransactionsContainer>
       <ContainerAddTransaction>
         <Link to="/income">
           <icon>
@@ -102,7 +102,7 @@ const Container = styled.div`
 
 const TransactionsHeader = styled.div`
   display: flex;
-  flex-direction: row-gap;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
@@ -120,7 +120,8 @@ const TransactionsContainer = styled.div`
   margin: 22px 0 13px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${(props) =>
+    props.transactions.length === 0 ? "center" : "flex-start"};
   padding: 15px;
 
   p {
@@ -132,6 +133,31 @@ const TransactionsContainer = styled.div`
     font-size: 20px;
     color: #868686;
     line-height: 24px;
+  }
+`;
+
+const Transaction = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: yellow;
+
+  span {
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 400;
+    color: #c6c6c6;
+    margin-bottom: 15px;
+  }
+
+  span:nth-child(2) {
+    color: #000000;
+    width: 100%;
+    margin-left: 8px;
+  }
+
+  span:nth-child(3) {
+    color: ${(props) => (props.type === "income" ? "#03AC00" : "#C70000")};
   }
 `;
 

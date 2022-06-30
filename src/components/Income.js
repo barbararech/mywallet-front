@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
@@ -13,7 +13,7 @@ export default function Income() {
   const [description, setDescription] = useState("");
 
   const { user } = useContext(UserContext);
-  const { name, token } = user;
+  const { token } = user;
 
   const config = {
     headers: {
@@ -27,6 +27,7 @@ export default function Income() {
     const body = {
       value,
       description,
+      type: "income",
     };
 
     try {

@@ -9,6 +9,8 @@ import Signup from "./Signup";
 import Transactions from "./Transactions";
 import Income from "./Income";
 import Expense from "./Expense";
+import EditIncome from "./EditIncome";
+import EditExpense from "./EditExpense";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -23,6 +25,8 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/income" element={<Income />} />  
           <Route path="/expense" element={<Expense />} />  
+          <Route path="/editIncome" element={<EditIncome />} />  
+          <Route path="/editExpense" element={<EditExpense />} />  
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

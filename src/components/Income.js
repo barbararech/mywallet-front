@@ -57,14 +57,14 @@ export default function Income() {
           placeholder="Descrição"
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button type="submit">Salvar Entrada</button>
+        <button type="submit">Salvar entrada</button>
       </>
     );
   }
 
   return (
     <Container>
-      <h2>Nova Entrada</h2>
+      <h2>Nova entrada</h2>
       <IncomeForms onSubmit={AddIncome}>{IncomeForm()}</IncomeForms>
     </Container>
   );

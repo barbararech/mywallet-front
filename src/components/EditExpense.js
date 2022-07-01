@@ -1,13 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 import styled from "styled-components";
 
-export default function Expense() {
+export default function EditExpense() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  console.log(state._id);
 
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
@@ -21,18 +23,19 @@ export default function Expense() {
     },
   };
 
-  async function AddExpense(event) {
+  async function EditExpense(event) {
     event.preventDefault();
 
     const body = {
       value: parseFloat(value),
       description,
       type: "expense",
+      _id: state._id,
     };
-
+    console.log(body);
     try {
-      await axios.post("http://localhost:5000/expense", body, config);
-      alert("Nova saída criada com sucesso!");
+      await axios.put("http://localhost:5000/editTransaction", body, config);
+      alert("Saída atualizada com sucesso!");
       navigate("/transactions");
     } catch (error) {
       const message = error.response.statusText;
@@ -57,15 +60,15 @@ export default function Expense() {
           placeholder="Descrição"
           onChange={(e) => setDescription(e.target.value)}
         />
-        <button type="submit">Salvar saída</button>
+        <button type="submit">Atualizar saída</button>
       </>
     );
   }
 
   return (
     <Container>
-      <h2>Nova Saída</h2>
-      <ExpenseForms onSubmit={AddExpense}>{ExpenseForm()}</ExpenseForms>
+      <h2>Editar saída</h2>
+      <ExpenseForms onSubmit={EditExpense}>{ExpenseForm()}</ExpenseForms>
     </Container>
   );
 }

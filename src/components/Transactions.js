@@ -56,7 +56,15 @@ export default function Signup() {
       return (
         <Transaction type={type} index={index}>
           <span>{date}</span>
-          <span>{description}</span>
+          <span
+            onClick={() =>
+              type === "income"
+                ? navigate("/editIncome", { state: { _id } })
+                : navigate("/editExpense", { state: { _id } })
+            }
+          >
+            {description}
+          </span>
           <span>{valueFixed}</span>
           <i onClick={() => Delete(_id)}>
             <IoCloseOutline />
@@ -78,7 +86,7 @@ export default function Signup() {
     let confirmAlert = window.confirm(
       "Você tem certeza que quer apagar esse registro?"
     );
-    console.log(_id);
+
     if (!confirmAlert) {
       return;
     }
@@ -253,6 +261,7 @@ const Transaction = styled.div`
     color: #000000;
     width: 100%;
     margin-left: 8px;
+    cursor: pointer;
   }
 
   span:nth-child(3) {

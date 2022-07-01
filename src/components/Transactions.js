@@ -8,6 +8,7 @@ import {
   IoExitOutline,
   IoAddCircleOutline,
   IoRemoveCircleOutline,
+  IoCloseOutline,
 } from "react-icons/io5";
 
 export default function Signup() {
@@ -49,7 +50,7 @@ export default function Signup() {
     }
 
     return transactions.map((transaction, index) => {
-      const { date, description, value, type } = transaction;
+      const { date, description, value, type, _id } = transaction;
       const valueFixed = value.toFixed(2);
 
       return (
@@ -57,9 +58,43 @@ export default function Signup() {
           <span>{date}</span>
           <span>{description}</span>
           <span>{valueFixed}</span>
+          <i onClick={() => Delete(_id)}>
+            <IoCloseOutline />
+          </i>
         </Transaction>
       );
     });
+  }
+
+  async function Delete(_id) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body = {
+      _id,
+    };
+    let confirmAlert = window.confirm(
+      "Você tem certeza que quer apagar esse registro?"
+    );
+    console.log(_id);
+    if (!confirmAlert) {
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/delete",
+        body,
+        config
+      );
+      alert("Registro apagado com sucesso!");
+      setTransactions(response.data);
+    } catch (error) {
+      const message = error.response.statusText;
+      alert(message);
+    }
   }
 
   function CalculateBalance() {
@@ -163,7 +198,7 @@ const TransactionsHeader = styled.div`
 
 const TransactionsContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc((100vh - 120px));
   background-color: #ffffff;
   border-radius: 5px;
   margin: 22px 0 13px 0;
@@ -172,6 +207,7 @@ const TransactionsContainer = styled.div`
   justify-content: ${(props) =>
     props.transactions.length === 0 ? "center" : "space-between"};
   padding: 15px;
+  overflow-y: scroll;
 
   .withouttransaction {
     display: flex;
@@ -200,6 +236,10 @@ const Transaction = styled.div`
   display: flex;
   flex-direction: row;
 
+  :last-child {
+    margin-bottom: 20px;
+  }
+
   span {
     font-family: "Raleway", sans-serif;
     font-size: 16px;
@@ -218,13 +258,26 @@ const Transaction = styled.div`
   span:nth-child(3) {
     color: ${(props) => (props.type === "income" ? "#03AC00" : "#C70000")};
   }
+
+  i {
+    color: #c6c6c6;
+    margin: 1px -5px 0 11px;
+    font-size: 18px;
+    line-height: 18.78px;
+    cursor: pointer;
+  }
 `;
 
 const Balance = styled.div`
-  width: 100%;
+  height: 25px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: absolute;
+  bottom: 153px;
+  left: 40px;
+  right: 39px;
+  background-color: #ffffff;
 
   span {
     font-family: "Raleway", sans-serif;

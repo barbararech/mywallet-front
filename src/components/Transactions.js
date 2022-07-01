@@ -41,7 +41,11 @@ export default function Signup() {
 
   function RenderTransactions() {
     if (transactions.length === 0) {
-      return <p>Não há registros de entrada ou saída</p>;
+      return (
+        <div className="withouttransaction">
+          <p>Não há registros de entrada ou saída</p>
+        </div>
+      );
     }
 
     return transactions.map((transaction, index) => {
@@ -168,6 +172,13 @@ const TransactionsContainer = styled.div`
   justify-content: ${(props) =>
     props.transactions.length === 0 ? "center" : "space-between"};
   padding: 15px;
+
+  .withouttransaction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 
   p {
     display: flex;

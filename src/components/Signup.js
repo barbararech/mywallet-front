@@ -31,7 +31,7 @@ export default function Signup() {
     }
 
     try {
-      await axios.post("https://git.heroku.com/barbara-mywallet.git/signup", body);
+      await axios.post("https://barbara-mywallet.herokuapp.com/signup", body);
       alert("Usuário criado com sucesso!");
       navigate("/");
     } catch (error) {

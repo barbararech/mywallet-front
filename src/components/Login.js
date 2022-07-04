@@ -23,7 +23,7 @@ export default function Login() {
     };
 
     try {
-      const response = await axios.post("https://git.heroku.com/barbara-mywallet.git/login", body);
+      const response = await axios.post("https://barbara-mywallet.herokuapp.com/login", body);
       const { name, email, token } = response.data;
 
       setUser({

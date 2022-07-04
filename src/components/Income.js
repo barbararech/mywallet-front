@@ -31,7 +31,7 @@ export default function Income() {
     };
 
     try {
-      await axios.post("https://git.heroku.com/barbara-mywallet.git/income", body, config);
+      await axios.post("https://barbara-mywallet.herokuapp.com/income", body, config);
       alert("Nova entrada criada com sucesso!");
       navigate("/transactions");
     } catch (error) {

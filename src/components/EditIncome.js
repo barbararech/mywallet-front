@@ -9,7 +9,6 @@ import styled from "styled-components";
 export default function EditIncome() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state._id);
 
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
@@ -32,9 +31,13 @@ export default function EditIncome() {
       type: "income",
       _id: state._id,
     };
-    console.log(body)
+
     try {
-      await axios.put("https://git.heroku.com/barbara-mywallet.git/editTransaction", body, config);
+      await axios.put(
+        "https://barbara-mywallet.herokuapp.com/editTransaction",
+        body,
+        config
+      );
       alert("Entrada atualizada com sucesso!");
       navigate("/transactions");
     } catch (error) {

@@ -31,7 +31,7 @@ export default function Expense() {
     };
 
     try {
-      await axios.post("https://git.heroku.com/barbara-mywallet.git/expense", body, config);
+      await axios.post("https://barbara-mywallet.herokuapp.com/expense", body, config);
       alert("Nova saída criada com sucesso!");
       navigate("/transactions");
     } catch (error) {

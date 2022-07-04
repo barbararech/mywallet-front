@@ -10,6 +10,7 @@ import {
   IoRemoveCircleOutline,
   IoCloseOutline,
 } from "react-icons/io5";
+import SignOut from "./Signout.js";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -129,28 +130,16 @@ export default function Signup() {
     }
   }
 
-  async function SignOut() {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      await axios.get("https://barbara-mywallet.herokuapp.com/signout", config);
-      alert("Usuário deslogado com sucesso!");
-      navigate("/");
-    } catch (error) {
-      const message = error.response.statusText;
-      alert(message);
-    }
-  }
+  const signout = async () => {
+    await SignOut(token);
+    navigate("/");
+  };
 
   return (
     <Container>
       <TransactionsHeader>
         <h2>Olá, {name}</h2>
-        <i onClick={() => SignOut()}>
+        <i onClick={signout}>
           <IoExitOutline />
         </i>
       </TransactionsHeader>

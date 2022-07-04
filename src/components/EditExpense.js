@@ -34,7 +34,7 @@ export default function EditExpense() {
     };
     console.log(body);
     try {
-      await axios.put("http://localhost:5000/editTransaction", body, config);
+      await axios.put("https://git.heroku.com/barbara-mywallet.git/editTransaction", body, config);
       alert("Saída atualizada com sucesso!");
       navigate("/transactions");
     } catch (error) {

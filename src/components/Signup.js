@@ -19,14 +19,19 @@ export default function Signup() {
       name,
       email,
       password,
+      confirmPassword,
     };
+
+    if (password.length < 5) {
+      return alert("A senha precisa ter no mínimo cinco caracteres!");
+    }
 
     if (password !== confirmPassword) {
       return alert("As senhas não são iguais. Tente novamente!");
     }
 
     try {
-      await axios.post("http://localhost:5000/signup", body);
+      await axios.post("https://git.heroku.com/barbara-mywallet.git/signup", body);
       alert("Usuário criado com sucesso!");
       navigate("/");
     } catch (error) {

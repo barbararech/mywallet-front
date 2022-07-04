@@ -27,7 +27,7 @@ export default function Signup() {
 
       try {
         const response = await axios.get(
-          "http://localhost:5000/transactions",
+          "https://git.heroku.com/barbara-mywallet.git/transactions",
           config
         );
 
@@ -93,7 +93,7 @@ export default function Signup() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/delete",
+        "https://git.heroku.com/barbara-mywallet.git/delete",
         body,
         config
       );
@@ -137,7 +137,7 @@ export default function Signup() {
     };
 
     try {
-      await axios.get("http://localhost:5000/signout", config);
+      await axios.get("https://git.heroku.com/barbara-mywallet.git/signout", config);
       alert("Usuário deslogado com sucesso!");
       navigate("/");
     } catch (error) {
